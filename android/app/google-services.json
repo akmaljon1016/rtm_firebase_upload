@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "750034286762",
+    "project_id": "flutter-rtm-1a91b",
+    "storage_bucket": "flutter-rtm-1a91b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:750034286762:android:4e178e1895b07a13ae78d3",
+        "android_client_info": {
+          "package_name": "com.example.rtm_firebase_upload"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnrvQURWrJ4RV32p1GGxnUhmS3wbAsDOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:750034286762:android:7ba5a909e76a5062ae78d3",
+        "android_client_info": {
+          "package_name": "com.rtm.flutter_rtm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnrvQURWrJ4RV32p1GGxnUhmS3wbAsDOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
