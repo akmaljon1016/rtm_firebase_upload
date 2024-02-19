@@ -30,14 +30,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   CollectionReference instance =
       FirebaseFirestore.instance.collection("images");
+  final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
-  saveLink(Reference ref) async {
+  saveLink(Reference ref,String path) async {
     var link = await ref.getDownloadURL();
-    instance.add({"image": link});
+    instance.add({"image": link, "path": path});
   }
 
   uploadPhoto() async {
-    final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
     final ImagePicker imagePicker = ImagePicker();
     XFile? xFile;
 
@@ -50,10 +50,9 @@ class _MyAppState extends State<MyApp> {
         Reference ref =
             firebaseStorage.ref("image").child("${file.path.split("/").last}");
         UploadTask snapshot = ref.putFile(file);
-        saveLink(ref);
         snapshot.then((value) async {
           if (value.state == TaskState.success) {
-            saveLink(ref);
+            saveLink(ref,file.path.split("/").last);
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text("Success")));
           } else {
@@ -93,7 +92,22 @@ class _MyAppState extends State<MyApp> {
                         itemBuilder: (context, index) {
                           final DocumentSnapshot documentSnapshot =
                               snapshot.data!.docs[index];
-                          return Image.network(documentSnapshot['image'],width: 100,height: 100,);
+                          return InkWell(
+                              onTap: () async {
+                                try {
+                                  Reference ref = firebaseStorage.ref(
+                                      'image/${documentSnapshot['path']}');
+                                  await ref.delete();
+                                  await instance.doc(documentSnapshot.id).delete();
+                                } catch (e) {
+                                  print('Error deleting reference: $e');
+                                }
+                              },
+                              child: Image.network(
+                                documentSnapshot['image'],
+                                width: 100,
+                                height: 100,
+                              ));
                         });
                   } else {
                     return CircularProgressIndicator();
